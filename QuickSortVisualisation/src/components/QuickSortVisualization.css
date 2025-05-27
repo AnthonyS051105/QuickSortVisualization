@@ -1,0 +1,25 @@
+.btn-reset {
+  background-color: #6b7280;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 0.375rem;
+}
+
+.btn-prev-next {
+  background-color: #3b82f6;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 0.375rem;
+}
+
+.btn-play {
+  background-color: #10b981;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 0.375rem;
+}
+
+.btn-disabled {
+  background-color: #d1d5db;
+  cursor: not-allowed;
+}
