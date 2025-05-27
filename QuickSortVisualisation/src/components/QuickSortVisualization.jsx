@@ -299,7 +299,7 @@ const QuickSortVisualization = () => {
           <div className="flex justify-center gap-2 mb-4 flex-wrap">
             <button
               onClick={handleReset}
-              className="px-4 py-2 bg-gray-500 text-white rounded-md font-semibold hover:bg-gray-600 transition-colors shadow-md hover:shadow-lg transform hover:scale-105 text-sm"
+              className="px-4 py-2 bg-gray-500 text-black rounded-md font-semibold hover:bg-gray-600 transition-colors shadow-md hover:shadow-lg transform hover:scale-105 text-sm"
             >
               🔄 Reset
             </button>
@@ -309,14 +309,14 @@ const QuickSortVisualization = () => {
               className={`px-4 py-2 rounded-md font-semibold transition-all shadow-md transform text-sm ${
                 currentStep === 0
                   ? "bg-gray-300 text-gray-500 cursor-not-allowed"
-                  : "bg-blue-500 text-white hover:bg-blue-600 hover:shadow-lg hover:scale-105"
+                  : "bg-blue-500 text-black hover:bg-blue-600 hover:shadow-lg hover:scale-105"
               }`}
             >
               ⬅️ Sebelumnya
             </button>
             <button
               onClick={handlePlayPause}
-              className="px-6 py-2 bg-green-500 text-white rounded-md font-semibold hover:bg-green-600 transition-colors shadow-md hover:shadow-lg transform hover:scale-105 text-sm"
+              className="px-6 py-2 bg-green-500 text-black rounded-md font-semibold hover:bg-green-600 transition-colors shadow-md hover:shadow-lg transform hover:scale-105 text-sm"
             >
               {isPlaying ? "⏸️ Jeda" : "▶️ Putar"}
             </button>
@@ -326,7 +326,7 @@ const QuickSortVisualization = () => {
               className={`px-4 py-2 rounded-md font-semibold transition-all shadow-md transform text-sm ${
                 currentStep === steps.length - 1
                   ? "bg-gray-300 text-gray-500 cursor-not-allowed"
-                  : "bg-blue-500 text-white hover:bg-blue-600 hover:shadow-lg hover:scale-105"
+                  : "bg-blue-500 text-black hover:bg-blue-600 hover:shadow-lg hover:scale-105"
               }`}
             >
               Berikutnya ➡️
