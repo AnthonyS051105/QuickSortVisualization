@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import "./QuickSortVisualization.css"; // Import file CSS
 
 const QuickSortVisualization = () => {
   // State untuk menyimpan langkah-langkah dari algoritma quicksort
@@ -177,126 +176,213 @@ const QuickSortVisualization = () => {
     setSpeed(parseInt(e.target.value));
   };
 
-  // Render komponen
+  // Render komponen dengan full screen layout
   return (
-    <div className="flex flex-col items-center p-4 bg-gray-50 rounded-lg shadow-md">
-      <h2 className="text-2xl font-bold mb-4">Visualisasi Quick Sort</h2>
-      <div className="text-lg mb-2">Array: [2, 6, 5, 3, 8, 7, 1, 0]</div>
-
-      {/* Visualisasi array */}
-      <div className="mb-4 w-full max-w-2xl">
-        <div className="flex justify-center mb-2">
-          {steps.length > 0 &&
-            steps[currentStep].array.map((value, index) => {
-              const step = steps[currentStep];
-              const isPivot = index === step.pivot;
-              const isComparing = index === step.comparing;
-              const isSwapping =
-                step.swapping &&
-                (index === step.swapping[0] || index === step.swapping[1]);
-
-              return (
-                <div
-                  key={index}
-                  className={`
-                  flex items-center justify-center
-                  w-12 h-12 m-1 rounded-md
-                  text-white font-bold text-lg
-                  ${
-                    isPivot
-                      ? "bg-red-500"
-                      : isComparing
-                      ? "bg-yellow-500"
-                      : isSwapping
-                      ? "bg-purple-500"
-                      : "bg-blue-500"
-                  }
-                  transition-all duration-300
-                `}
-                >
-                  {value}
-                </div>
-              );
-            })}
+    <div className="h-screen w-screen bg-gradient-to-br from-blue-50 to-purple-50 flex flex-col overflow-hidden">
+      {/* Header */}
+      <header className="bg-white shadow-lg border-b-4 border-blue-500 py-4 flex-shrink-0">
+        <div className="w-full px-6">
+          <h1 className="text-3xl md:text-4xl font-bold text-center text-gray-800 mb-1">
+            Visualisasi Quick Sort
+          </h1>
+          <p className="text-center text-gray-600 text-base md:text-lg">
+            Array: [2, 6, 5, 3, 8, 7, 1, 0]
+          </p>
         </div>
+      </header>
 
-        {/* Indikator */}
-        <div className="flex justify-between mb-4">
-          <div>
-            Langkah: {currentStep + 1} / {steps.length}
+      {/* Main Content */}
+      <main className="flex-1 w-full px-6 py-4 flex flex-col justify-center overflow-y-auto">
+        {/* Array Visualization */}
+        <div className="mb-4">
+          <div className="flex justify-center items-center mb-4 flex-wrap gap-2 px-2">
+            {steps.length > 0 &&
+              steps[currentStep].array.map((value, index) => {
+                const step = steps[currentStep];
+                const isPivot = index === step.pivot;
+                const isComparing = index === step.comparing;
+                const isSwapping =
+                  step.swapping &&
+                  (index === step.swapping[0] || index === step.swapping[1]);
+
+                return (
+                  <div
+                    key={index}
+                    className={`
+                    flex items-center justify-center
+                    w-12 h-12 md:w-16 md:h-16 lg:w-20 lg:h-20
+                    rounded-lg shadow-lg
+                    text-white font-bold text-lg md:text-xl lg:text-2xl
+                    transform transition-all duration-500 ease-in-out
+                    ${
+                      isPivot
+                        ? "bg-gradient-to-br from-red-500 to-red-600 scale-110 shadow-red-300"
+                        : isComparing
+                        ? "bg-gradient-to-br from-yellow-500 to-yellow-600 scale-105 shadow-yellow-300"
+                        : isSwapping
+                        ? "bg-gradient-to-br from-purple-500 to-purple-600 scale-105 shadow-purple-300 animate-pulse"
+                        : "bg-gradient-to-br from-blue-500 to-blue-600 shadow-blue-300"
+                    }
+                    hover:scale-105
+                  `}
+                  >
+                    {value}
+                  </div>
+                );
+              })}
           </div>
-          <div>Kecepatan: {speed}ms</div>
+
+          {/* Progress Bar */}
+          <div className="w-full bg-gray-200 rounded-full h-2 mb-4 mx-auto max-w-4xl">
+            <div
+              className="bg-gradient-to-r from-blue-500 to-purple-500 h-2 rounded-full transition-all duration-300"
+              style={{
+                width: `${((currentStep + 1) / steps.length) * 100}%`,
+              }}
+            ></div>
+          </div>
+
+          {/* Step Info */}
+          <div className="flex justify-between items-center mb-4 text-base md:text-lg max-w-4xl mx-auto">
+            <div className="bg-white px-4 py-2 rounded-lg shadow">
+              <span className="font-semibold text-gray-700">
+                Langkah: {currentStep + 1} / {steps.length}
+              </span>
+            </div>
+            <div className="bg-white px-4 py-2 rounded-lg shadow">
+              <span className="font-semibold text-gray-700">
+                Kecepatan: {speed}ms
+              </span>
+            </div>
+          </div>
         </div>
 
-        {/* Keterangan */}
-        <div className="bg-white p-4 rounded-md mb-4">
-          <p className="text-lg">
-            {steps.length > 0 ? steps[currentStep].message : ""}
+        {/* Message Box */}
+        <div className="bg-white rounded-lg shadow-lg p-4 mb-4 border-l-4 border-blue-500 max-w-4xl mx-auto">
+          <p className="text-lg md:text-xl text-center text-gray-800 font-medium">
+            {steps.length > 0 ? steps[currentStep].message : "Memuat..."}
           </p>
         </div>
 
-        {/* Legenda */}
-        <div className="flex flex-wrap justify-center gap-4 mb-4">
-          <div className="flex items-center">
-            <div className="w-4 h-4 bg-red-500 rounded-sm mr-2"></div>
-            <span>Pivot</span>
+        {/* Legend */}
+        <div className="bg-white rounded-lg shadow-lg p-4 mb-4 max-w-4xl mx-auto">
+          <h3 className="text-lg font-bold text-center mb-3 text-gray-800">
+            Keterangan Warna
+          </h3>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
+            <div className="flex items-center justify-center p-2 bg-gray-50 rounded-md">
+              <div className="w-4 h-4 bg-gradient-to-br from-red-500 to-red-600 rounded-md mr-2 shadow"></div>
+              <span className="font-medium text-gray-700 text-sm">Pivot</span>
+            </div>
+            <div className="flex items-center justify-center p-2 bg-gray-50 rounded-md">
+              <div className="w-4 h-4 bg-gradient-to-br from-yellow-500 to-yellow-600 rounded-md mr-2 shadow"></div>
+              <span className="font-medium text-gray-700 text-sm">
+                Membandingkan
+              </span>
+            </div>
+            <div className="flex items-center justify-center p-2 bg-gray-50 rounded-md">
+              <div className="w-4 h-4 bg-gradient-to-br from-purple-500 to-purple-600 rounded-md mr-2 shadow"></div>
+              <span className="font-medium text-gray-700 text-sm">Menukar</span>
+            </div>
+            <div className="flex items-center justify-center p-2 bg-gray-50 rounded-md">
+              <div className="w-4 h-4 bg-gradient-to-br from-blue-500 to-blue-600 rounded-md mr-2 shadow"></div>
+              <span className="font-medium text-gray-700 text-sm">
+                Elemen Biasa
+              </span>
+            </div>
           </div>
-          <div className="flex items-center">
-            <div className="w-4 h-4 bg-yellow-500 rounded-sm mr-2"></div>
-            <span>Membandingkan</span>
-          </div>
-          <div className="flex items-center">
-            <div className="w-4 h-4 bg-purple-500 rounded-sm mr-2"></div>
-            <span>Menukar</span>
-          </div>
-          <div className="flex items-center">
-            <div className="w-4 h-4 bg-blue-500 rounded-sm mr-2"></div>
-            <span>Elemen Biasa</span>
-          </div>
-        </div>
-      </div>
-
-      {/* Kontrol */}
-      <div className="flex flex-col items-center mb-4 w-full max-w-md">
-        <div className="flex justify-between w-full mb-2">
-          <button onClick={handleReset} className="btn btn-reset">
-            Reset
-          </button>
-          <button
-            onClick={handlePrev}
-            disabled={currentStep === 0}
-            className={`btn btn-nav ${currentStep === 0 ? "btn-disabled" : ""}`}
-          >
-            Sebelumnya
-          </button>
-          <button onClick={handlePlayPause} className="btn btn-play">
-            {isPlaying ? "Jeda" : "Putar"}
-          </button>
-          <button
-            onClick={handleNext}
-            disabled={currentStep === steps.length - 1}
-            className={`btn btn-nav ${
-              currentStep === steps.length - 1 ? "btn-disabled" : ""
-            }`}
-          >
-            Berikutnya
-          </button>
         </div>
 
-        <div className="slider-container">
-          <span className="mr-2">Lambat</span>
-          <input
-            type="range"
-            min="200"
-            max="2000"
-            step="100"
-            value={speed}
-            onChange={handleSpeedChange}
-            className="w-full"
-          />
-          <span className="ml-2">Cepat</span>
+        {/* Controls */}
+        <div className="bg-white rounded-lg shadow-lg p-4 max-w-4xl mx-auto">
+          {/* Navigation Buttons */}
+          <div className="flex justify-center gap-2 mb-4 flex-wrap">
+            <button
+              onClick={handleReset}
+              className="px-4 py-2 bg-gray-500 text-white rounded-md font-semibold hover:bg-gray-600 transition-colors shadow-md hover:shadow-lg transform hover:scale-105 text-sm"
+            >
+              🔄 Reset
+            </button>
+            <button
+              onClick={handlePrev}
+              disabled={currentStep === 0}
+              className={`px-4 py-2 rounded-md font-semibold transition-all shadow-md transform text-sm ${
+                currentStep === 0
+                  ? "bg-gray-300 text-gray-500 cursor-not-allowed"
+                  : "bg-blue-500 text-white hover:bg-blue-600 hover:shadow-lg hover:scale-105"
+              }`}
+            >
+              ⬅️ Sebelumnya
+            </button>
+            <button
+              onClick={handlePlayPause}
+              className="px-6 py-2 bg-green-500 text-white rounded-md font-semibold hover:bg-green-600 transition-colors shadow-md hover:shadow-lg transform hover:scale-105 text-sm"
+            >
+              {isPlaying ? "⏸️ Jeda" : "▶️ Putar"}
+            </button>
+            <button
+              onClick={handleNext}
+              disabled={currentStep === steps.length - 1}
+              className={`px-4 py-2 rounded-md font-semibold transition-all shadow-md transform text-sm ${
+                currentStep === steps.length - 1
+                  ? "bg-gray-300 text-gray-500 cursor-not-allowed"
+                  : "bg-blue-500 text-white hover:bg-blue-600 hover:shadow-lg hover:scale-105"
+              }`}
+            >
+              Berikutnya ➡️
+            </button>
+          </div>
+
+          {/* Speed Control */}
+          <div className="flex items-center justify-center gap-3">
+            <span className="text-gray-700 font-medium text-sm">🐌 Lambat</span>
+            <input
+              type="range"
+              min="200"
+              max="2000"
+              step="100"
+              value={speed}
+              onChange={handleSpeedChange}
+              className="flex-1 max-w-xs h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer slider"
+              style={{
+                background: `linear-gradient(to right, #3b82f6 0%, #3b82f6 ${
+                  ((2000 - speed) / 1800) * 100
+                }%, #e5e7eb ${((2000 - speed) / 1800) * 100}%, #e5e7eb 100%)`,
+              }}
+            />
+            <span className="text-gray-700 font-medium text-sm">🐰 Cepat</span>
+          </div>
         </div>
-      </div>
+      </main>
+
+      {/* Footer */}
+      <footer className="bg-white border-t border-gray-200 py-2 flex-shrink-0">
+        <div className="w-full px-6 text-center text-gray-600 text-sm">
+          <p>© 2024 Quick Sort Visualization - Interactive Learning Tool</p>
+        </div>
+      </footer>
+
+      <style jsx>{`
+        .slider::-webkit-slider-thumb {
+          appearance: none;
+          height: 16px;
+          width: 16px;
+          border-radius: 50%;
+          background: #3b82f6;
+          cursor: pointer;
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .slider::-moz-range-thumb {
+          height: 16px;
+          width: 16px;
+          border-radius: 50%;
+          background: #3b82f6;
+          cursor: pointer;
+          border: none;
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+      `}</style>
     </div>
   );
 };
